@@ -6,7 +6,7 @@ Luwak is a project to make it easier to write functional code in the Java Langua
 
 Java added a lot of new classes with version 8 to grant some possibility of writing code in a functional way. To work with them without writing a lot of code, this library provides aliases of these classes.
 
-##### Function
+#### Function
 Use the `ƒ` symbol:
 ```java
 Function<String, String> old = String::toUpperCase;
@@ -15,7 +15,7 @@ Function<String, String> old = String::toUpperCase;
 
 _:information_source: The `ƒ` is implemented as a subclass of Function_.
 
-##### Predicate
+#### Predicate
 Use the `ℙ` symbol:
 ```java
 Predicate<String> old = s -> s.contains("x");
@@ -23,7 +23,7 @@ Predicate<String> old = s -> s.contains("x");
 ```
 _:information_source: The `ℙ` is implemented as a subclass of Predicate._
 
-##### Optional
+#### Optional
 Use the `Ø` symbol:
 ```java
 Optional<String> old = Optional.of("x");
@@ -34,7 +34,7 @@ _:warning: The `Ø` is implemented as wrapper class of Optional due the Optional
 ### Extension
 To create even less verbose code, the following objects provide extra functionality.
 
-##### Result
+#### Result
 The result object can have two states, either successful or failure. Use the `Œ` symbol:
 ```java
 ƒ<String, HttpRequest> get = url -> HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
