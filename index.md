@@ -4,7 +4,7 @@ Luwak is a project to make it easier to write functional code in the Java Langua
 
 ### Aliases
 
-Java added a lot of new classes with version 8 to grant some possibility of writing code in a functional way. To work with them without writing a lot of code, this library provides aliases of these classes.
+Java added a lot of new classes with version 8 to grant some possibility of writing code in a functional way. To work with them without writing a lot of code, this library provides aliases of these classes. The aliases are created by subclassing the original interface / class.
 
 #### Function
 Use the `ƒ` symbol:
@@ -13,15 +13,12 @@ Function<String, String> old = String::toUpperCase;
 ƒ<String, String> new = String::toUpperCase;
 ```
 
-_:information_source: The `ƒ` is implemented as a subclass of Function_.
-
 #### Predicate
 Use the `ℙ` symbol:
 ```java
 Predicate<String> old = s -> s.contains("x");
 ℙ<String> old = s -> s.contains("x");
 ```
-_:information_source: The `ℙ` is implemented as a subclass of Predicate._
 
 #### Optional
 Use the `Ø` symbol:
@@ -46,12 +43,12 @@ HttpClient client = HttpClient.newHttpClient();
 ### Why Luwak?
 Kopi luwak is a coffee that consists of partially digested coffee cherries, which have been eaten and defecated by the Asian palm civet. In Indonesia this animal is called luwak. The process of creation can be written elegantly functional:
 ```java
-ƒ<CoffeeCherry, CoffeeCherry> eat = Mouth::process;
+ƒ<CoffeeCherry, CoffeeCherry> eat = Luwak::eat;
 ƒ<CoffeeCherry, Feces> digest = Intestines::digest;
 ƒ<Feces, Feces> defecate = Body::leave;
 ƒ<Feces, Core> cleanup = f -> CoffeeTeam.search(f).clean();
 ƒ<Core, Bean> roast = CoffeeRoasterMachine:go;
 
-ƒ<CoffeeCherry, Bean> processCoffee = eat.andThen(digest).andThen(defecate).andThen(cleanup).andThen(roast);
+ƒ<CoffeeCherry, Bean> processCoffee = eat.andThen(digest).andThen(defecate).andThen(cleanup).andThen(roast).apply(new CoffeeCherry());
 ```
 As the Java programming language is called after the Java coffee, everything comes beautifully together.
