@@ -2,12 +2,13 @@ package org.jcore.luwak.wrapper;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.jcore.luwak.function.$;
 import org.jcore.luwak.function.ƒ;
+import org.jcore.luwak.function.₵;
+import org.jcore.luwak.function.ℙ;
+import org.jcore.luwak.function.ℝ;
 
 public class Ø<T> {
 	private static final Ø<?> EMPTY = new Ø<>();
@@ -54,15 +55,15 @@ public class Ø<T> {
 		return value.isEmpty();
 	}
 
-	public void ifPresent(Consumer<? super T> action) {
+	public void ifPresent(₵<? super T> action) {
 		value.ifPresent(action);
 	}
 
-	public void ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction) {
+	public void ifPresentOrElse(₵<? super T> action, ℝ emptyAction) {
 		value.ifPresentOrElse(action, emptyAction);
 	}
 
-	public Ø<T> filter(Predicate<? super T> predicate) {
+	public Ø<T> filter(ℙ<? super T> predicate) {
 		return of(value.filter(predicate));
 	}
 
@@ -82,7 +83,7 @@ public class Ø<T> {
 		return Objects.requireNonNull(r);
 	}
 
-	public Ø<T> or(Supplier<? extends Ø<? extends T>> supplier) {
+	public Ø<T> or($<? extends Ø<? extends T>> supplier) {
 		Objects.requireNonNull(supplier);
 
 		if (isPresent()) {
@@ -102,7 +103,7 @@ public class Ø<T> {
 		return value.orElse(other);
 	}
 
-	public T orElseGet(Supplier<? extends T> supplier) {
+	public T orElseGet($<? extends T> supplier) {
 		return value.orElseGet(supplier);
 	}
 
@@ -110,7 +111,7 @@ public class Ø<T> {
 		return value.orElseThrow();
 	}
 
-	public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
+	public <X extends Throwable> T orElseThrow($<? extends X> exceptionSupplier) throws X {
 		return value.orElseThrow(exceptionSupplier);
 	}
 

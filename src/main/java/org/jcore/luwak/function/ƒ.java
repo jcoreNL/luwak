@@ -2,6 +2,8 @@ package org.jcore.luwak.function;
 
 import java.util.function.Function;
 
+import org.jcore.luwak.function.checked._ƒ;
+
 /**
  * Represents a function that accepts one argument and produces a result.
  * This is a functional interface whose functional method is apply(Object).
@@ -25,5 +27,15 @@ public interface ƒ<T, R> extends Function<T,R> {
 
 	static <T> ƒ<T, T> identity() {
 		return t -> t;
+	}
+
+	static <T, R> ƒ<T, R> __(_ƒ<T, R> f) {
+		return arg -> {
+			try {
+				return f.apply(arg);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 }

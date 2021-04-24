@@ -1,11 +1,11 @@
 package org.jcore.luwak.wrapper;
 
 import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-import org.jcore.luwak.function.CheckedSupplier;
+import org.jcore.luwak.function.$;
+import org.jcore.luwak.function.checked._$;
 import org.jcore.luwak.function.ƒ;
+import org.jcore.luwak.function.₵;
 import org.jcore.luwak.function.ℙ;
 
 /**
@@ -21,7 +21,7 @@ public abstract class Œ<V> {
 
 	public abstract V orElse(final V defaultValue);
 
-	public abstract V orElseGet(final Supplier<V> defaultValue);
+	public abstract V orElseGet(final $<V> defaultValue);
 
 	public abstract <U> Œ<U> map(final ƒ<V, U> f);
 
@@ -29,13 +29,13 @@ public abstract class Œ<V> {
 
 	public abstract Œ<V> mapFailure(final String message);
 
-	public abstract void ifExists(Consumer<V> action);
+	public abstract void ifExists(₵<V> action);
 
-	public abstract void ifExistsOrThrow(Consumer<V> action);
+	public abstract void ifExistsOrThrow(₵<V> action);
 
-	public abstract Ø<RuntimeException> ifExistsOrException(Consumer<V> action);
+	public abstract Ø<RuntimeException> ifExistsOrException(₵<V> action);
 
-	public Œ<V> or(final Supplier<Œ<V>> defaultValue) {
+	public Œ<V> or(final $<Œ<V>> defaultValue) {
 		return map(x -> this).orElseGet(defaultValue);
 	}
 
@@ -66,7 +66,7 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public V orElseGet(Supplier<V> defaultValue) {
+		public V orElseGet($<V> defaultValue) {
 			return defaultValue.get();
 		}
 
@@ -86,17 +86,17 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public void ifExists(Consumer<V> action) {
+		public void ifExists(₵<V> action) {
 			// Do nothing
 		}
 
 		@Override
-		public void ifExistsOrThrow(Consumer<V> action) {
+		public void ifExistsOrThrow(₵<V> action) {
 			// Do nothing
 		}
 
 		@Override
-		public Ø<RuntimeException> ifExistsOrException(Consumer<V> action) {
+		public Ø<RuntimeException> ifExistsOrException(₵<V> action) {
 			return Ø.empty();
 		}
 
@@ -137,12 +137,12 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public void ifExistsOrThrow(Consumer<V> action) {
+		public void ifExistsOrThrow(₵<V> action) {
 			throw exception;
 		}
 
 		@Override
-		public Ø<RuntimeException> ifExistsOrException(Consumer<V> action) {
+		public Ø<RuntimeException> ifExistsOrException(₵<V> action) {
 			return Ø.of(exception);
 		}
 
@@ -167,7 +167,7 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public V orElseGet(Supplier<V> defaultValue) {
+		public V orElseGet($<V> defaultValue) {
 			return value;
 		}
 
@@ -197,17 +197,17 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public void ifExists(Consumer<V> action) {
+		public void ifExists(₵<V> action) {
 			action.accept(value);
 		}
 
 		@Override
-		public void ifExistsOrThrow(Consumer<V> action) {
+		public void ifExistsOrThrow(₵<V> action) {
 			action.accept(value);
 		}
 
 		@Override
-		public Ø<RuntimeException> ifExistsOrException(Consumer<V> action) {
+		public Ø<RuntimeException> ifExistsOrException(₵<V> action) {
 			ifExists(action);
 			return Ø.empty();
 		}
@@ -259,7 +259,7 @@ public abstract class Œ<V> {
 				: of(value);
 	}
 
-	public static <T> Œ<T> doTry(CheckedSupplier<T> f) {
+	public static <T> Œ<T> doTry(_$<T> f) {
 		try {
 			return of(f.get());
 		} catch (Exception e) {

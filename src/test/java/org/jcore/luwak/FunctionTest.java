@@ -1,12 +1,19 @@
 package org.jcore.luwak;
 
+import static java.util.stream.Collectors.toList;
+import static org.jcore.luwak.function.ƒ.__;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import org.jcore.luwak.function.$;
 import org.jcore.luwak.function.ƒ;
+import org.jcore.luwak.function.₵;
 import org.jcore.luwak.function.ℙ;
+import org.jcore.luwak.function.ℝ;
 import org.junit.jupiter.api.Test;
 
 class FunctionTest {
@@ -51,5 +58,54 @@ class FunctionTest {
 
 		assertEquals("Yeah", eval.apply("something..."::equals));
 		assertEquals("Nope", eval.apply("else"::equals));
+	}
+
+	@Test
+	void testCheckedSupplier() {
+		final BiConsumer<String, String> ignore = (a, b) -> {};
+
+		final var result = List.of("A").stream()
+				.collect($.__(() -> URLEncoder.encode("items?price=gte:10&price=lte:100", "UTF-8")), ignore, ignore);
+
+		assertEquals("items%3Fprice%3Dgte%3A10%26price%3Dlte%3A100", result);
+	}
+
+	@Test
+	void testCheckedFunction() {
+		final var result = List.of("items?price=gte:10&price=lte:100").stream()
+				.map(__(s -> URLEncoder.encode(s, "UTF-8")))
+				.collect(toList());
+
+		assertEquals("items%3Fprice%3Dgte%3A10%26price%3Dlte%3A100", result.get(0));
+	}
+
+	@Test
+	void testCheckedConsumer() {
+		final var result = List.of("items?price=gte:10&price=lte:100").stream()
+				.peek(₵.__(s -> URLEncoder.encode(s, "UTF-8")))
+				.collect(toList());
+
+		assertEquals("items?price=gte:10&price=lte:100", result.get(0));
+	}
+
+	@Test
+	void testCheckedPredicate() {
+		final var result = List.of("items?price=gte:10&price=lte:100").stream()
+				.filter(ℙ.__(s -> URLEncoder.encode(s, "UTF-8").contains("%3")))
+				.collect(toList());
+
+		assertEquals("items?price=gte:10&price=lte:100", result.get(0));
+	}
+
+	@Test
+	void testCheckedRunnable() {
+		ℝ runnable = ℝ.__(() -> {
+			final var result = URLEncoder.encode("items?price=gte:10&price=lte:100", "UTF-8");
+			assertEquals("items%3Fprice%3Dgte%3A10%26price%3Dlte%3A100", result);
+		});
+
+		Thread t = new Thread(runnable);
+		t.start();
+		t.stop();
 	}
 }

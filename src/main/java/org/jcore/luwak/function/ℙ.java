@@ -3,6 +3,8 @@ package org.jcore.luwak.function;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import org.jcore.luwak.function.checked._ℙ;
+
 /**
  * Represents a predicate (boolean-valued function) of one argument.
  *
@@ -38,5 +40,15 @@ public interface ℙ<T> extends Predicate<T> {
 	static <T> ℙ<T> not(ℙ<? super T> target) {
 		Objects.requireNonNull(target);
 		return (ℙ<T>) target.negate();
+	}
+
+	static <T> ℙ<T> __(_ℙ<T> f) {
+		return arg -> {
+			try {
+				return f.test(arg);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 }
