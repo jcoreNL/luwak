@@ -1,5 +1,3 @@
-## Luwak
-
 _Luwak is a project to make it easier to write functional code in the Java Language. It provides aliases to write the code a lot shorter and extends the language with extra objects. Unlike libraries like [Functional Java](https://www.functionaljava.org) and [Vavr](https://www.vavr.io), this project does not have the intention to replace native objects like the Java Stream._
 
 With Luwak you could write this:
