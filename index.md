@@ -14,11 +14,24 @@ With Luwak you could write this:
 
 Java added a lot of new classes with version 8 to grant some possibility of writing code in a functional way. To work with them without writing a lot of code, this library provides aliases of these classes. The aliases are created by subclassing the original interface / class.
 
+#### Supplier
+Use the `$` symbol:
+```java
+Supplier<String> old = () -> "x";
+$<String> old = () -> "x";
+```
+
 #### Function
 Use the `ƒ` symbol:
 ```java
 Function<String, String> old = String::toUpperCase;
 ƒ<String, String> new = String::toUpperCase;
+```
+#### Consumer
+Use the `₵` symbol:
+```java
+Consumer<String> old = x -> {};
+₵<String> old = x -> {};
 ```
 
 #### Predicate
@@ -28,6 +41,13 @@ Predicate<String> old = s -> s.contains("x");
 ℙ<String> old = s -> s.contains("x");
 ```
 
+#### Runnable
+Use the `ℝ` symbol:
+```java
+Runnable old = () -> {};
+ℝ old = () -> {};
+```
+
 #### Optional
 Use the `Ø` symbol:
 ```java
@@ -35,6 +55,16 @@ Optional<String> old = Optional.of("x");
 Ø<String> old = Ø.of("x");
 ```
 _:warning: The `Ø` is implemented as wrapper class of Optional due the Optional class being defined as final. This makes the use of this alias rather clumsy, thus this alias is defined as experimental._
+
+### Checked functions
+The Java compiler does not let you write lambda's with checked exceptions. Therefore the library provides checked functions to bypass this problem. All above functional interfaces do have a checked variant; to keep it short and consise, the same symbols are used with a `_` prefix. With other words, the CheckedFunction does look like `_ƒ`. All the default functional interfaces do have a `__` function to wrap a checked variant.
+
+Example:
+```java
+List.of("items?price=gte:10&price=lte:100").stream()
+    .map(f.__(s -> URLEncoder.encode(s, "UTF-8"))) // or `__(...)` with a static import
+    .collect(toList());
+```
 
 ### Extension
 To create even less verbose code, the following objects provide extra functionality.
