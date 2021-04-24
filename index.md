@@ -62,7 +62,7 @@ The Java compiler does not let you write lambda's with checked exceptions. There
 Example:
 ```java
 List.of("items?price=gte:10&price=lte:100").stream()
-    .map(f.__(s -> URLEncoder.encode(s, "UTF-8"))) // or `__(...)` with a static import
+    .map(ƒ.__(s -> URLEncoder.encode(s, "UTF-8"))) // or `__(...)` with a static import
     .collect(toList());
 ```
 
