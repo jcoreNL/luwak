@@ -18,41 +18,41 @@ Java added a lot of new classes with version 8 to grant some possibility of writ
 Use the `$` symbol:
 ```java
 Supplier<String> old = () -> "x";
-$<String> old = () -> "x";
+$<String> now = () -> "x";
 ```
 
 #### Function
 Use the `ƒ` symbol:
 ```java
 Function<String, String> old = String::toUpperCase;
-ƒ<String, String> new = String::toUpperCase;
+ƒ<String, String> now = String::toUpperCase;
 ```
 #### Consumer
 Use the `₵` symbol:
 ```java
 Consumer<String> old = x -> {};
-₵<String> old = x -> {};
+₵<String> now = x -> {};
 ```
 
 #### Predicate
 Use the `ℙ` symbol:
 ```java
 Predicate<String> old = s -> s.contains("x");
-ℙ<String> old = s -> s.contains("x");
+ℙ<String> now = s -> s.contains("x");
 ```
 
 #### Runnable
 Use the `ℝ` symbol:
 ```java
 Runnable old = () -> {};
-ℝ old = () -> {};
+ℝ now = () -> {};
 ```
 
 #### Optional
 Use the `Ø` symbol:
 ```java
 Optional<String> old = Optional.of("x");
-Ø<String> old = Ø.of("x");
+Ø<String> now = Ø.of("x");
 ```
 _:warning: The `Ø` is implemented as wrapper class of Optional due the Optional class being defined as final. This makes the use of this alias rather clumsy, thus this alias is defined as experimental._
 
