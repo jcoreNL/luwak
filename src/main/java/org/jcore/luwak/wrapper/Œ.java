@@ -9,104 +9,153 @@ import org.jcore.luwak.function.₵;
 import org.jcore.luwak.function.ℙ;
 
 /**
- * Result class, holds either a value or a exception.
+ * Result class, holds either a value or an exception.
  *
  * @param <V> The value
  */
 public abstract class Œ<V> {
-	@SuppressWarnings("rawtypes")
-	private static Œ empty = new Empty();
-
-	private Œ() {}
-
-	public abstract V orElse(final V defaultValue);
-
-	public abstract V orElseGet(final $<V> defaultValue);
-
-	public abstract <U> Œ<U> map(final ƒ<V, U> f);
-
-	public abstract <U> Œ<U> flatMap(final ƒ<V, Œ<U>> f);
-
-	public abstract Œ<V> mapFailure(final String message);
-
-	public abstract void ifExists(₵<V> action);
-
-	public abstract void ifExistsOrThrow(₵<V> action);
-
-	public abstract Ø<RuntimeException> ifExistsOrException(₵<V> action);
-
-	public Œ<V> or(final $<Œ<V>> defaultValue) {
-		return map(x -> this).orElseGet(defaultValue);
+	private Œ() {
 	}
 
-	public Œ<V> filter(final ℙ<V> p) {
-		return flatMap(x -> p.test(x)
+	/**
+	 * If a result is successful, returns the value, otherwise returns {@code other}.
+	 *
+	 * @param other the value to be returned, if no value is present. May be {@code null}.
+	 * @return the value, if successful, otherwise {@code other}
+	 */
+	public abstract V orElse(final V other);
+
+	/**
+	 * If a value is successful, returns the value, otherwise returns the result
+	 * produced by the supplying function.
+	 *
+	 * @param supplier the supplying function that produces a value to be returned
+	 * @return the value, if successful, otherwise the result produced by the supplying function
+	 * @throws NullPointerException if no value is present and the supplying function is {@code null}
+	 */
+	public abstract V orElseGet(final $<V> supplier);
+
+	/**
+	 * If a value is successful, returns an {@code Œ} describing the result of applying the given mapping function to
+	 * the value, otherwise returns a failure {@code Œ}.
+	 *
+	 * @param <U>    The type of the value returned from the mapping function
+	 * @param mapper the mapping function to apply to a value
+	 * @return a {@code Œ} describing the result of applying a mapping
+	 * function to the value of this {@code Œ}, if a value is successful, otherwise a failure {@code Œ}.
+	 * @throws NullPointerException if the mapping function is {@code null} or returns a {@code null} result
+	 */
+	public abstract <U> Œ<U> map(final ƒ<V, U> mapper);
+
+	/**
+	 * If a value is successful, returns the result of applying the given
+	 * {@code Œ}-bearing mapping function to the value, otherwise returns
+	 * a failure {@code Œ}.
+	 *
+	 * <p>This method is similar to {@link #map(ƒ)}, but the mapping
+	 * function is one whose result is already an {@code Œ}, and if
+	 * invoked, {@code flatMap} does not wrap it within an additional {@code Œ}.
+	 *
+	 * @param <U>    The type of value of the {@code Ø} returned by the mapping function
+	 * @param mapper the mapping function to apply to a value, if present
+	 * @return the result of applying an {@code Œ}-bearing mapping
+	 * function to the value of this {@code Œ}, if a value is successful, otherwise a failure {@code Œ}.
+	 * @throws NullPointerException if the mapping function is {@code null} or returns a {@code null} result
+	 */
+	public abstract <U> Œ<U> flatMap(final ƒ<V, Œ<U>> mapper);
+
+	/**
+	 * If a value is successful, performs the given action with the value, otherwise does nothing.
+	 *
+	 * @param action the action to be performed, if a value is successful
+	 * @throws NullPointerException if the given action is {@code null}
+	 */
+	public abstract void ifSuccessful(₵<V> action);
+
+	/**
+	 * If a value is successful, performs the given action with the value, otherwise throw the failure exception.
+	 *
+	 * @param action the action to be performed, if a value is successful
+	 * @throws NullPointerException if the given action is {@code null}
+	 */
+	public abstract void ifSuccessfulOrThrow(₵<V> action);
+
+	/**
+	 * If a value is successful, performs the given action with the value and return an empty {@code Ø} instance.
+	 * Otherwise return a present {@code Ø} instance with the failure exception as its value.
+	 *
+	 * @param action the action to be performed, if a value is successful
+	 * @throws NullPointerException if the given action is {@code null}
+	 */
+	public abstract Ø<RuntimeException> ifSuccessfulOrException(₵<V> action);
+
+	/**
+	 * If a value is successful, returns an {@code Œ} describing the value,
+	 * otherwise returns an {@code Œ} produced by the supplying function.
+	 *
+	 * @param supplier the supplying function that produces an {@code Œ} to be returned
+	 * @return returns an {@code Œ} describing the value of this {@code Œ}, if a value is successful,
+	 * otherwise an {@code Œ} produced by the supplying function.
+	 * @throws NullPointerException if the supplying function is {@code null} or produces a {@code null} result
+	 */
+	public Œ<V> or(final $<Œ<V>> supplier) {
+		Objects.requireNonNull(supplier);
+		return map(x -> this).orElseGet(() -> Objects.requireNonNull(supplier.get()));
+	}
+
+	/**
+	 * If a value is successful, and the value matches the given predicate,
+	 * returns an {@code Œ} describing the value, otherwise returns a failure {@code Œ}.
+	 *
+	 * @param predicate the predicate to apply to a value
+	 * @return an {@code Œ} describing the value of this {@code Œ},
+	 * if a value is successful and the value matches the given predicate, otherwise a failure {@code Œ}
+	 * @throws NullPointerException if the predicate is {@code null}
+	 */
+	public Œ<V> filter(final ℙ<V> predicate) {
+		Objects.requireNonNull(predicate);
+		return flatMap(x -> predicate.test(x)
 				? this
 				: failure("Condition did not match"));
 	}
 
-	public Œ<V> filter(final ℙ<V> p, String errorMessage) {
-		return flatMap(x -> p.test(x)
+	/**
+	 * If a value is successful, and the value matches the given predicate,
+	 * returns an {@code Œ} describing the value, otherwise returns a failure {@code Œ}.
+	 *
+	 * @param predicate the predicate to apply to a value
+	 * @param errorMessage the failure message if the value does not match the predicate
+	 * @return an {@code Œ} describing the value of this {@code Œ},
+	 * if a value is successful and the value matches the given predicate, otherwise a failure {@code Œ}
+	 * @throws NullPointerException if the predicate is {@code null}
+	 */
+	public Œ<V> filter(final ℙ<V> predicate, String errorMessage) {
+		return flatMap(x -> predicate.test(x)
 				? this
 				: failure(errorMessage));
 	}
 
-	public boolean exists() {
-		return exists(a -> true);
+	/**
+	 * If a value is successful, returns {@code true}, otherwise {@code false}.
+	 *
+	 * @return {@code true} if a value is successful, otherwise {@code false}
+	 */
+	public boolean isSuccessFul() {
+		return isSuccessFul(a -> true);
 	}
 
-	public boolean exists(final ℙ<V> p) {
-		return map(p::test).orElse(false);
+	/**
+	 * If a value is successful, and the value matches the given predicate,
+	 * returns {@code true}, otherwise {@code false}.
+	 *
+	 * @param predicate the predicate to apply to a value
+	 * @return {@code true} if a value is successful and matches the given predicate, otherwise {@code false}
+	 */
+	public boolean isSuccessFul(final ℙ<V> predicate) {
+		return map(predicate::test).orElse(false);
 	}
 
-	private static class Empty<V> extends Œ<V> {
-		@Override
-		public V orElse(V defaultValue) {
-			return defaultValue;
-		}
-
-		@Override
-		public V orElseGet($<V> defaultValue) {
-			return defaultValue.get();
-		}
-
-		@Override
-		public <U> Œ<U> map(ƒ<V, U> f) {
-			return empty();
-		}
-
-		@Override
-		public <U> Œ<U> flatMap(ƒ<V, Œ<U>> f) {
-			return empty();
-		}
-
-		@Override
-		public Œ<V> mapFailure(String message) {
-			return this;
-		}
-
-		@Override
-		public void ifExists(₵<V> action) {
-			// Do nothing
-		}
-
-		@Override
-		public void ifExistsOrThrow(₵<V> action) {
-			// Do nothing
-		}
-
-		@Override
-		public Ø<RuntimeException> ifExistsOrException(₵<V> action) {
-			return Ø.empty();
-		}
-
-		@Override
-		public String toString() {
-			return "Empty()";
-		}
-	}
-
-	private static class Failure<V> extends Empty<V> {
+	private static class Failure<V> extends Œ<V> {
 		private final RuntimeException exception;
 
 		private Failure(final String message) {
@@ -122,27 +171,41 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public <U> Œ<U> map(ƒ<V, U> f) {
+		public V orElse(V other) {
+			return other;
+		}
+
+		@Override
+		public V orElseGet($<V> supplier) {
+			return supplier.get();
+		}
+
+		@Override
+		public <U> Œ<U> map(ƒ<V, U> mapper) {
+			Objects.requireNonNull(mapper);
 			return failure(exception);
 		}
 
 		@Override
-		public <U> Œ<U> flatMap(ƒ<V, Œ<U>> f) {
+		public <U> Œ<U> flatMap(ƒ<V, Œ<U>> mapper) {
+			Objects.requireNonNull(mapper);
 			return failure(exception);
 		}
 
 		@Override
-		public Œ<V> mapFailure(String message) {
-			return failure(new IllegalStateException(message, exception));
+		public void ifSuccessful(₵<V> action) {
+			Objects.requireNonNull(action);
 		}
 
 		@Override
-		public void ifExistsOrThrow(₵<V> action) {
+		public void ifSuccessfulOrThrow(₵<V> action) {
+			Objects.requireNonNull(action);
 			throw exception;
 		}
 
 		@Override
-		public Ø<RuntimeException> ifExistsOrException(₵<V> action) {
+		public Ø<RuntimeException> ifSuccessfulOrException(₵<V> action) {
+			Objects.requireNonNull(action);
 			return Ø.of(exception);
 		}
 
@@ -162,19 +225,19 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public V orElse(V defaultValue) {
+		public V orElse(V other) {
 			return value;
 		}
 
 		@Override
-		public V orElseGet($<V> defaultValue) {
+		public V orElseGet($<V> supplier) {
 			return value;
 		}
 
 		@Override
-		public <U> Œ<U> map(ƒ<V, U> f) {
+		public <U> Œ<U> map(ƒ<V, U> mapper) {
 			try {
-				return of(f.apply(value));
+				return of(Objects.requireNonNull(mapper.apply(value)));
 			}
 			catch (Exception e) {
 				return failure(e);
@@ -182,9 +245,9 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public <U> Œ<U> flatMap(ƒ<V, Œ<U>> f) {
+		public <U> Œ<U> flatMap(ƒ<V, Œ<U>> mapper) {
 			try {
-				return f.apply(value);
+				return Objects.requireNonNull(mapper.apply(value));
 			}
 			catch (Exception e) {
 				return failure(e);
@@ -192,77 +255,135 @@ public abstract class Œ<V> {
 		}
 
 		@Override
-		public Œ<V> mapFailure(String message) {
-			return this;
-		}
-
-		@Override
-		public void ifExists(₵<V> action) {
+		public void ifSuccessful(₵<V> action) {
+			Objects.requireNonNull(action);
 			action.accept(value);
 		}
 
 		@Override
-		public void ifExistsOrThrow(₵<V> action) {
-			action.accept(value);
+		public void ifSuccessfulOrThrow(₵<V> action) {
+			ifSuccessful(action);
 		}
 
 		@Override
-		public Ø<RuntimeException> ifExistsOrException(₵<V> action) {
-			ifExists(action);
+		public Ø<RuntimeException> ifSuccessfulOrException(₵<V> action) {
+			ifSuccessful(action);
 			return Ø.empty();
 		}
 
 		@Override
 		public String toString() {
-			return "Success (" + value.toString() + ")";
+			return "Success (" + value + ")";
 		}
 	}
 
-	public static <V> Œ<V> failure(final String message) {
-		return new Failure<>(message);
+	/**
+	 * Returns a failure {@code Œ} instance.
+	 *
+	 * @param errorMessage the failure message
+	 * @param <V>          The type of the failure
+	 * @return a failure {@code Œ}
+	 */
+	public static <V> Œ<V> failure(final String errorMessage) {
+		return new Failure<>(errorMessage);
 	}
 
-	public static <V> Œ<V> failure(final RuntimeException exception) {
-		return new Failure<>(exception);
-	}
-
+	/**
+	 * Returns a failure {@code Œ} instance.
+	 *
+	 * @param exception the exception
+	 * @param <V>       The type of the failure
+	 * @return a failure {@code Œ}
+	 * @throws NullPointerException if exception is {@code null}
+	 */
 	public static <V> Œ<V> failure(final Exception exception) {
+		Objects.requireNonNull(exception);
+
+		if (exception instanceof RuntimeException) {
+			return new Failure<>((RuntimeException) exception);
+		}
+
 		return new Failure<>(exception);
 	}
 
-	public static <V> Œ<V> empty() {
-		return empty;
-	}
-
+	/**
+	 * Returns a {@code Œ} describing the given non-{@code null} value.
+	 *
+	 * @param value the value to describe, which must be non-{@code null}
+	 * @param <V>   the type of the value
+	 * @return a {@code Œ} with the successful value
+	 * @throws NullPointerException if value is {@code null}
+	 */
 	public static <V> Œ<V> of(final V value) {
 		return new Success<>(value);
 	}
 
-	public static <V> Œ<V> of(ℙ<V> p, final V value) {
-		return of(p, value, "Condition did not match");
+	/**
+	 * Matches non-{@code null} value to given predicate, if so it returs a {@code Œ}
+	 * describing the given non-{@code null} value, otherwise returns a failure {@code Œ}.
+	 *
+	 * @param predicate the predicate to apply to the value
+	 * @param value     the value to describe, which must be non-{@code null}
+	 * @param <V>       the type of the value
+	 * @return a {@code Œ} with the result of the function, otherwise returns a failure {@code Œ}.
+	 * @throws NullPointerException if predicate or value is {@code null}
+	 */
+	public static <V> Œ<V> of(ℙ<V> predicate, final V value) {
+		return of(predicate, value, "Condition did not match");
 	}
 
-	public static <V> Œ<V> of(ℙ<V> p, final V value, final String message) {
+	/**
+	 * Matches non-{@code null} value to given predicate, if so it returs a {@code Œ}
+	 * describing the given non-{@code null} value, otherwise returns a failure {@code Œ} with given error message.
+	 *
+	 * @param predicate    the predicate to apply to the value
+	 * @param value        the value to describe, which must be non-{@code null}
+	 * @param errorMessage the failure message if the value is {@code null}
+	 * @param <V>          the type of the value
+	 * @return a {@code Œ} with the result of the function, otherwise returns a failure {@code Œ}.
+	 * @throws NullPointerException if predicate or value is {@code null}
+	 */
+	public static <V> Œ<V> of(ℙ<V> predicate, final V value, final String errorMessage) {
+		Objects.requireNonNull(predicate);
 		try {
-			return p.test(value)
+			return predicate.test(value)
 					? of(value)
-					: failure(message);
+					: failure(errorMessage);
 		}
 		catch (Exception e) {
 			return failure(new IllegalStateException("Exception while evaluating: " + value, e));
 		}
 	}
 
+	/**
+	 * Returns a {@code Œ} describing the given value, if
+	 * non-{@code null}, otherwise returns a failure {@code Œ} with given error message.
+	 *
+	 * @param value        the possibly-{@code null} value to describe
+	 * @param errorMessage the failure message if the value is {@code null}
+	 * @param <V>          the type of the value
+	 * @return a {@code Œ} with a value if the specified value is non-{@code null}, otherwise a failure {@code Ø}
+	 */
 	public static <V> Œ<V> ofNullable(final V value, final String errorMessage) {
 		return value == null
 				? failure(errorMessage)
 				: of(value);
 	}
 
-	public static <T> Œ<T> doTry(_$<T> f) {
+	/**
+	 * Executes supplying function, if successful it returns a {@code Œ} with the result of the function,
+	 * otherwise returns a failure {@code Œ}.
+	 *
+	 * @param supplier the supplying function that produces an {@code Œ} to be returned
+	 * @param <V>      the type of the value
+	 * @return a {@code Œ} with the result of the function, otherwise returns a failure {@code Œ}.
+	 */
+	public static <V> Œ<V> doTry(_$<V> supplier) {
+		Objects.requireNonNull(supplier);
 		try {
-			return of(f.get());
-		} catch (Exception e) {
+			return of(supplier.get());
+		}
+		catch (Exception e) {
 			return failure(e);
 		}
 	}
