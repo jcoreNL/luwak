@@ -7,7 +7,6 @@ import org.jcore.luwak.function.$;
  */
 @FunctionalInterface
 public interface _$<T> {
-
 	/**
 	 * Gets a result.
 	 *
