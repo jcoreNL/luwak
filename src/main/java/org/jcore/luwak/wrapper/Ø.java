@@ -325,7 +325,6 @@ public class Ø<T> {
 		return this.isPresent() && other.isPresent() && Objects.equals(this.get(), other.get());
 	}
 
-
 	/**
 	 * Returns the hash code of the value, if present, otherwise {@code 0} (zero) if no value is present.
 	 *
@@ -336,17 +335,14 @@ public class Ø<T> {
 		return value.hashCode();
 	}
 
-
 	/**
 	 * Returns a non-empty string representation of this {@code Ø} suitable for debugging.
 	 * The exact presentation format is unspecified and may vary between implementations and versions.
 	 *
-	 * @implSpec
-	 * If a value is present the result must include its string representation
+	 * @return the string representation of this instance
+	 * @implSpec If a value is present the result must include its string representation
 	 * in the result.  Empty and present {@code Optional}s must be unambiguously
 	 * differentiable.
-	 *
-	 * @return the string representation of this instance
 	 */
 	@Override
 	public String toString() {

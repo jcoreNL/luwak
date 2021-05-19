@@ -123,7 +123,7 @@ public abstract class Œ<V> {
 	 * If a value is successful, and the value matches the given predicate,
 	 * returns an {@code Œ} describing the value, otherwise returns a failure {@code Œ}.
 	 *
-	 * @param predicate the predicate to apply to a value
+	 * @param predicate    the predicate to apply to a value
 	 * @param errorMessage the failure message if the value does not match the predicate
 	 * @return an {@code Œ} describing the value of this {@code Œ},
 	 * if a value is successful and the value matches the given predicate, otherwise a failure {@code Œ}
