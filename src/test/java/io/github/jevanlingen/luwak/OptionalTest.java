@@ -1,11 +1,11 @@
-package org.jcore.luwak;
+package io.github.jevanlingen.luwak;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.jcore.luwak.wrapper.Ø;
+import io.github.jevanlingen.luwak.wrapper.Ø;
 import org.junit.jupiter.api.Test;
 
 class OptionalTest {

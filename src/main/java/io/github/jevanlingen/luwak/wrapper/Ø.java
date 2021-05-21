@@ -1,16 +1,15 @@
-package org.jcore.luwak.wrapper;
+package io.github.jevanlingen.luwak.wrapper;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
-import org.jcore.luwak.function.$;
-import org.jcore.luwak.function.ƒ;
-import org.jcore.luwak.function.₵;
-import org.jcore.luwak.function.ℙ;
-import org.jcore.luwak.function.ℝ;
+import io.github.jevanlingen.luwak.function.$;
+import io.github.jevanlingen.luwak.function.ƒ;
+import io.github.jevanlingen.luwak.function.₵;
+import io.github.jevanlingen.luwak.function.ℙ;
+import io.github.jevanlingen.luwak.function.ℝ;
 
 /**
  * A container object which may or may not contain a non-{@code null} value.

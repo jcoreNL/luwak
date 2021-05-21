@@ -1,9 +1,9 @@
-package org.jcore.luwak.function;
+package io.github.jevanlingen.luwak.function;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import org.jcore.luwak.function.checked._$;
+import io.github.jevanlingen.luwak.function.checked._$;
 
 /**
  * Represents a supplier of results.

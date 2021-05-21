@@ -1,7 +1,7 @@
-package org.jcore.luwak;
+package io.github.jevanlingen.luwak;
 
 import static java.util.stream.Collectors.toList;
-import static org.jcore.luwak.function.ƒ.__;
+import static io.github.jevanlingen.luwak.function.ƒ.__;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URLEncoder;
@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.jcore.luwak.function.$;
-import org.jcore.luwak.function.ƒ;
-import org.jcore.luwak.function.₵;
-import org.jcore.luwak.function.ℙ;
-import org.jcore.luwak.function.ℝ;
+import io.github.jevanlingen.luwak.function.$;
+import io.github.jevanlingen.luwak.function.ƒ;
+import io.github.jevanlingen.luwak.function.₵;
+import io.github.jevanlingen.luwak.function.ℙ;
+import io.github.jevanlingen.luwak.function.ℝ;
 import org.junit.jupiter.api.Test;
 
 class FunctionTest {

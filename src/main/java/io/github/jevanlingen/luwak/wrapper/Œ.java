@@ -1,12 +1,12 @@
-package org.jcore.luwak.wrapper;
+package io.github.jevanlingen.luwak.wrapper;
 
 import java.util.Objects;
 
-import org.jcore.luwak.function.$;
-import org.jcore.luwak.function.checked._$;
-import org.jcore.luwak.function.ƒ;
-import org.jcore.luwak.function.₵;
-import org.jcore.luwak.function.ℙ;
+import io.github.jevanlingen.luwak.function.$;
+import io.github.jevanlingen.luwak.function.checked._$;
+import io.github.jevanlingen.luwak.function.ƒ;
+import io.github.jevanlingen.luwak.function.₵;
+import io.github.jevanlingen.luwak.function.ℙ;
 
 /**
  * Result class, holds either a value or an exception.

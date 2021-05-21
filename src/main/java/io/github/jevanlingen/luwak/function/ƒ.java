@@ -1,9 +1,9 @@
-package org.jcore.luwak.function;
+package io.github.jevanlingen.luwak.function;
 
 import java.util.Objects;
 import java.util.function.Function;
 
-import org.jcore.luwak.function.checked._ƒ;
+import io.github.jevanlingen.luwak.function.checked._ƒ;
 
 /**
  * Represents a function that accepts one argument and produces a result.

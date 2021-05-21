@@ -1,7 +1,7 @@
-package org.jcore.luwak;
+package io.github.jevanlingen.luwak;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
-import static org.jcore.luwak.wrapper.Œ.doTry;
+import static io.github.jevanlingen.luwak.wrapper.Œ.doTry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,8 +11,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.util.Arrays;
 
-import org.jcore.luwak.function.ƒ;
-import org.jcore.luwak.wrapper.Œ;
+import io.github.jevanlingen.luwak.function.ƒ;
+import io.github.jevanlingen.luwak.wrapper.Œ;
 import org.junit.jupiter.api.Test;
 
 class ResultTest {

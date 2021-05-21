@@ -1,8 +1,8 @@
-package org.jcore.luwak.function;
+package io.github.jevanlingen.luwak.function;
 
 import java.util.Objects;
 
-import org.jcore.luwak.function.checked._ℝ;
+import io.github.jevanlingen.luwak.function.checked._ℝ;
 
 public interface ℝ extends Runnable {
 	/**

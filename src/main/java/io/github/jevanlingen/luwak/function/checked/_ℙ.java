@@ -1,9 +1,9 @@
-package org.jcore.luwak.function.checked;
+package io.github.jevanlingen.luwak.function.checked;
 
 import java.util.Objects;
 import java.util.function.Predicate;
 
-import org.jcore.luwak.function.ℙ;
+import io.github.jevanlingen.luwak.function.ℙ;
 
 /**
  * A {@link ℙ} that allows for checked exceptions.

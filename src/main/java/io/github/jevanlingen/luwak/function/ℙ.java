@@ -1,9 +1,9 @@
-package org.jcore.luwak.function;
+package io.github.jevanlingen.luwak.function;
 
 import java.util.Objects;
 import java.util.function.Predicate;
 
-import org.jcore.luwak.function.checked._ℙ;
+import io.github.jevanlingen.luwak.function.checked._ℙ;
 
 /**
  * Represents a predicate (boolean-valued function) of one argument.

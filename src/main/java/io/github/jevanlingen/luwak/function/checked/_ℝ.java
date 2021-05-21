@@ -1,6 +1,6 @@
-package org.jcore.luwak.function.checked;
+package io.github.jevanlingen.luwak.function.checked;
 
-import org.jcore.luwak.function.ℝ;
+import io.github.jevanlingen.luwak.function.ℝ;
 
 /**
  * A {@link ℝ} that allows for checked exceptions.
