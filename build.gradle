@@ -2,8 +2,11 @@ plugins {
     id 'java-library'
 }
 
-group 'org.jcore'
+group 'io.github.jevanlingen'
 version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
