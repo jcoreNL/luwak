@@ -1,9 +1,12 @@
 plugins {
-    id 'java-library'
+    id 'java'
+    id 'maven'
+    id 'signing'
 }
 
 group 'io.github.jevanlingen'
-version '1.0-SNAPSHOT'
+archivesBaseName = 'luwak'
+version '0.2-SNAPSHOT'
 
 sourceCompatibility = 11
 targetCompatibility = 11
@@ -19,4 +22,66 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Luwak'
+                packaging 'jar'
+                description 'Helper classes to make it easeier to write FP code in Java'
+                url 'https://jevanlingen.github.io/luwak/'
+
+                scm {
+                    connection 'scm:git:https://github.com/jevanlingen/luwak/'
+                    developerConnection 'scm:git:https://github.com/jevanlingen/luwak/'
+                    url 'https://github.com/jevanlingen/luwak/'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'jevanlingen'
+                        name 'Jacob van Lingen'
+                        email 'jacobvanlingen91@gmail.com'
+                    }
+                }
+            }
+        }
+    }
 }

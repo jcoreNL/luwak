@@ -319,7 +319,7 @@ public abstract class Œ<V> {
 	}
 
 	/**
-	 * Matches non-{@code null} value to given predicate, if so it returs a {@code Œ}
+	 * Matches non-{@code null} value to given predicate, if so it returns a {@code Œ}
 	 * describing the given non-{@code null} value, otherwise returns a failure {@code Œ}.
 	 *
 	 * @param predicate the predicate to apply to the value
@@ -333,7 +333,7 @@ public abstract class Œ<V> {
 	}
 
 	/**
-	 * Matches non-{@code null} value to given predicate, if so it returs a {@code Œ}
+	 * Matches non-{@code null} value to given predicate, if so it returns a {@code Œ}
 	 * describing the given non-{@code null} value, otherwise returns a failure {@code Œ} with given error message.
 	 *
 	 * @param predicate    the predicate to apply to the value

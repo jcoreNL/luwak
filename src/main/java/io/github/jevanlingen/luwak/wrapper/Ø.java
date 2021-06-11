@@ -339,9 +339,6 @@ public class Ø<T> {
 	 * The exact presentation format is unspecified and may vary between implementations and versions.
 	 *
 	 * @return the string representation of this instance
-	 * @implSpec If a value is present the result must include its string representation
-	 * in the result.  Empty and present {@code Optional}s must be unambiguously
-	 * differentiable.
 	 */
 	@Override
 	public String toString() {
