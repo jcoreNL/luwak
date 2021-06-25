@@ -78,6 +78,23 @@ HttpClient client = HttpClient.newHttpClient();
 Œ<HttpResponse<String>> result = doTry(() -> client.send(get.apply("http://openjdk.java.net/"), ofString()));
 ```
 
+### Utility
+Some actions like mapping, filtering and finding an element in a lilst are so common, it is a pity you need a lot of streaming code to write it down. Luwak provides a `DO` class to shorten these actions:
+```java
+List<String> lowerCaseString = List.of("EXAMPLE 1", "EXAMPLE 2").stream().map(String::toLowerCase).collect(Collectors.toList());
+List<String> lowerCaseString = Do.map(List.of("EXAMPLE 1", "EXAMPLE 2"), String::toLowerCase);
+
+List<String> onlyFirstExample = List.of("EXAMPLE 1", "EXAMPLE 2").stream().filter(s -> s.equals("EXAMPLE 1")).collect(Collectors.toList());
+List<String> onlyFirstExample = Do.filter(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
+
+Optional<String> possibleFirstExample = List.of("EXAMPLE 1", "EXAMPLE 2").stream().filter(s -> s.equals("EXAMPLE 1")).findAny();
+Optional<String> possibleFirstExample = Do.findAny(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
+
+boolean matched = List.of("EXAMPLE 1", "EXAMPLE 2").stream().anyMatch(s -> s.equals("EXAMPLE 1"));
+boolean matched = Do.anyMatch(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
+```
+
+
 ### Why Luwak?
 Kopi luwak is a coffee that consists of partially digested coffee cherries, which have been eaten and defecated by the Asian palm civet. In Indonesia this animal is called luwak. The process of creation can be written elegantly functional:
 ```java
