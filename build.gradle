@@ -6,7 +6,7 @@ plugins {
 
 group 'io.github.jevanlingen'
 archivesBaseName = 'luwak'
-version '0.2-SNAPSHOT'
+version '0.3-SNAPSHOT'
 
 sourceCompatibility = 11
 targetCompatibility = 11
