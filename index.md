@@ -91,7 +91,7 @@ Optional<String> possibleFirstExample = List.of("EXAMPLE 1", "EXAMPLE 2").stream
 Optional<String> possibleFirstExample = Do.findAny(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
 
 boolean matched = List.of("EXAMPLE 1", "EXAMPLE 2").stream().anyMatch(s -> s.equals("EXAMPLE 1"));
-boolean matched = Do.anyMatch(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
+boolean matched = anyMatch(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1")); // by importing `DO` statically
 ```
 
 
