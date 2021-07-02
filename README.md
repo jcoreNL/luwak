@@ -9,6 +9,6 @@ Pull the latest version from the central Maven repositories:
 <dependency>
     <groupId>io.github.jevanlingen</groupId>
     <artifactId>luwak</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 </dependency>
 ```
