@@ -1,8 +1,13 @@
 package io.github.jevanlingen.luwak.util;
 
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.github.jevanlingen.luwak.function.ƒ;
@@ -28,7 +33,16 @@ public final class Do {
 	 * @throws NullPointerException if either list or mapper are null
 	 */
 	public static <T, R> List<R> map(final List<T> list, final ƒ<T, R> mapper) {
-		return list.stream().map(mapper).collect(Collectors.toUnmodifiableList());
+		Objects.requireNonNull(list);
+		Objects.requireNonNull(mapper);
+
+		final var newList = new ArrayList<R>();
+
+		for (T t : list) {
+			newList.add(mapper.apply(t));
+		}
+
+		return unmodifiableList(newList);
 	}
 
 	/**
@@ -41,7 +55,18 @@ public final class Do {
 	 * @throws NullPointerException if either list or predicate are null
 	 */
 	public static <T> List<T> filter(final List<T> list, final ℙ<T> predicate) {
-		return list.stream().filter(predicate).collect(Collectors.toUnmodifiableList());
+		Objects.requireNonNull(list);
+		Objects.requireNonNull(predicate);
+
+		final var newList = new ArrayList<T>();
+
+		for (T t : list) {
+			if (predicate.test(t)) {
+				newList.add(t);
+			}
+		}
+
+		return unmodifiableList(newList);
 	}
 
 	/**
@@ -57,7 +82,16 @@ public final class Do {
 	 * @throws NullPointerException if either list or predicate are null
 	 */
 	public static <T> boolean anyMatch(final List<T> list, final ℙ<T> predicate) {
-		return list.stream().anyMatch(predicate);
+		Objects.requireNonNull(list);
+		Objects.requireNonNull(predicate);
+
+		for (T t : list) {
+			if (predicate.test(t)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -76,7 +110,16 @@ public final class Do {
 	 * @throws NullPointerException if either list or predicate are null
 	 */
 	public static <T> Ø<T> findAny(final List<T> list, final ℙ<T> predicate) {
-		return Ø.of(list.stream().filter(predicate).findAny());
+		Objects.requireNonNull(list);
+		Objects.requireNonNull(predicate);
+
+		for (T t : list) {
+			if (predicate.test(t)) {
+				return Ø.of(t);
+			}
+		}
+
+		return Ø.empty();
 	}
 
 	/* ---------------------------------------------------- SET ----------------------------------------------------- */
@@ -93,7 +136,16 @@ public final class Do {
 	 * @throws NullPointerException if either set or mapper are null
 	 */
 	public static <T, R> Set<R> map(final Set<T> set, final ƒ<T, R> mapper) {
-		return set.stream().map(mapper).collect(Collectors.toUnmodifiableSet());
+		Objects.requireNonNull(set);
+		Objects.requireNonNull(mapper);
+
+		final var newSet = new HashSet<R>();
+
+		for (T t : set) {
+			newSet.add(mapper.apply(t));
+		}
+
+		return unmodifiableSet(newSet);
 	}
 
 	/**
@@ -106,7 +158,18 @@ public final class Do {
 	 * @throws NullPointerException if either set or predicate are null
 	 */
 	public static <T> Set<T> filter(final Set<T> set, final ℙ<T> predicate) {
-		return set.stream().filter(predicate).collect(Collectors.toUnmodifiableSet());
+		Objects.requireNonNull(set);
+		Objects.requireNonNull(predicate);
+
+		final var newSet = new HashSet<T>();
+
+		for (T t : set) {
+			if (predicate.test(t)) {
+				newSet.add(t);
+			}
+		}
+
+		return unmodifiableSet(newSet);
 	}
 
 	/**
@@ -122,7 +185,16 @@ public final class Do {
 	 * @throws NullPointerException if either set or predicate are null
 	 */
 	public static <T> boolean anyMatch(final Set<T> set, final ℙ<T> predicate) {
-		return set.stream().anyMatch(predicate);
+		Objects.requireNonNull(set);
+		Objects.requireNonNull(predicate);
+
+		for (T t : set) {
+			if (predicate.test(t)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -141,7 +213,16 @@ public final class Do {
 	 * @throws NullPointerException if either set or predicate are null
 	 */
 	public static <T> Ø<T> findAny(final Set<T> set, final ℙ<T> predicate) {
-		return Ø.of(set.stream().filter(predicate).findAny());
+		Objects.requireNonNull(set);
+		Objects.requireNonNull(predicate);
+
+		for (T t : set) {
+			if (predicate.test(t)) {
+				return Ø.of(t);
+			}
+		}
+
+		return Ø.empty();
 	}
 
 	/* --------------------------------------------------- STREAM --------------------------------------------------- */
@@ -162,6 +243,9 @@ public final class Do {
 	 * @throws NullPointerException if either set or predicate are null
 	 */
 	public static <T> Ø<T> findAny(final Stream<T> stream, final ℙ<T> predicate) {
+		Objects.requireNonNull(stream);
+		Objects.requireNonNull(predicate);
+
 		return Ø.of(stream.filter(predicate).findAny());
 	}
 }
