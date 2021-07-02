@@ -79,21 +79,30 @@ HttpClient client = HttpClient.newHttpClient();
 ```
 
 ### Utility
-Some actions like mapping, filtering and finding an element in a lilst are so common, it is a pity you need a lot of streaming code to write it down. Luwak provides a `DO` class to shorten these actions:
+Some actions like mapping, filtering and finding an element in a lilst are so common, it is a pity you need a lot of streaming code to write it down. Luwak provides a `Do` class to shorten these actions:
 ```java
-List<String> lowerCaseString = List.of("EXAMPLE 1", "EXAMPLE 2").stream().map(String::toLowerCase).collect(Collectors.toList());
-List<String> lowerCaseString = Do.map(List.of("EXAMPLE 1", "EXAMPLE 2"), String::toLowerCase);
+List<String> lowerCaseString = List.of("Example 1", "Example 2").stream().map(String::toLowerCase).collect(Collectors.toList());
+List<String> lowerCaseString = Do.map(List.of("Example 1", "Example 2"), String::toLowerCase);
 
-List<String> onlyFirstExample = List.of("EXAMPLE 1", "EXAMPLE 2").stream().filter(s -> s.equals("EXAMPLE 1")).collect(Collectors.toList());
-List<String> onlyFirstExample = Do.filter(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
+List<String> onlyFirstExample = List.of("Example 1", "Example 2").stream().filter(s -> s.equals("Example 1")).collect(Collectors.toList());
+List<String> onlyFirstExample = Do.filter(List.of("Example 1", "Example 2"), s -> s.equals("Example 1"));
 
-Optional<String> possibleFirstExample = List.of("EXAMPLE 1", "EXAMPLE 2").stream().filter(s -> s.equals("EXAMPLE 1")).findAny();
-Optional<String> possibleFirstExample = Do.findAny(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1"));
+Optional<String> possibleFirstExample = List.of("Example 1", "Example 2").stream().filter(s -> s.equals("Example 1")).findAny();
+Ø<String> possibleFirstExample = Do.findAny(List.of("Example 1", "Example 2"), s -> s.equals("Example 1"));
 
-boolean matched = List.of("EXAMPLE 1", "EXAMPLE 2").stream().anyMatch(s -> s.equals("EXAMPLE 1"));
-boolean matched = anyMatch(List.of("EXAMPLE 1", "EXAMPLE 2"), s -> s.equals("EXAMPLE 1")); // by importing `DO` statically
+boolean matched = List.of("Example 1", "Example 2").stream().anyMatch(s -> s.equals("Example 1"));
+boolean matched = anyMatch(List.of("Example 1", "Example 2"), s -> s.equals("Example 1")); // by importing `Do` statically
 ```
 
+_:information_source: By using [Project Lombok's](https://projectlombok.org) extension methods, the utility methods could written like native syntax:_
+```java
+@ExtensionMethod({ Do.class })
+public class Example {
+    public static void main(String[] args) {
+        List.of("Example 1", "Example 2").filter(s -> s.equals("Example 1"));
+    }
+}
+```
 
 ### Why Luwak?
 Kopi luwak is a coffee that consists of partially digested coffee cherries, which have been eaten and defecated by the Asian palm civet. In Indonesia this animal is called luwak. The process of creation can be written elegantly functional:
