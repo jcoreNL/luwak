@@ -8,8 +8,23 @@
 }
 
 .page-header {
-  background-image: url(https://image.freepik.com/vrije-photo/kopi-luwak-of-civet-coffee-koffiebonen-uitgescheiden-door-de-civet_37874-600.jpg);
+  background-color: white;
+  background-image: none;
+  position: relative;
+}
+.page-header > * {
+  position: relative;
+}
+.page-header:before {
+  content: '';
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/55/Luwak_coffee_beans.jpg);
   background-size: cover;
+  position: absolute;
+  filter: blur(3px);
 }
 
 h3 {
