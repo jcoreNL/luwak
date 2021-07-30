@@ -116,3 +116,6 @@ Kopi luwak is a coffee that consists of partially digested coffee cherries, whic
 ƒ<CoffeeCherry, Bean> processCoffee = eat.andThen(digest).andThen(defecate).andThen(cleanup).andThen(roast).apply(new CoffeeCherry());
 ```
 As the Java programming language is called after the Java coffee, everything comes beautifully together.
+
+### Credits
+The used favicon is a free vector iamge by VectorStock. You can find it [here](https://www.vectorstock.com/royalty-free-vector/asian-palm-civet-head-face-vector-33880719).
