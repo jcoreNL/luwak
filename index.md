@@ -79,7 +79,7 @@ HttpClient client = HttpClient.newHttpClient();
 ```
 
 ### Utility
-Some actions like mapping, filtering and finding an element in a lilst are so common, it is a pity you need a lot of streaming code to write it down. Luwak provides a `Do` class to shorten these actions:
+Some actions like mapping, filtering and finding an element in a List are so common, it is a pity you need a lot of streaming code to write it down. Luwak provides a `Do` class to shorten these actions:
 ```java
 List<String> lowerCaseString = List.of("Example 1", "Example 2").stream().map(String::toLowerCase).collect(Collectors.toList());
 List<String> lowerCaseString = Do.map(List.of("Example 1", "Example 2"), String::toLowerCase);
@@ -118,4 +118,4 @@ Kopi luwak is a coffee that consists of partially digested coffee cherries, whic
 As the Java programming language is called after the Java coffee, everything comes beautifully together.
 
 ### Credits
-The used favicon is a free vector iamge by VectorStock. You can find it [here](https://www.vectorstock.com/royalty-free-vector/asian-palm-civet-head-face-vector-33880719).
+The used favicon is a free vector image by VectorStock. You can find it [here](https://www.vectorstock.com/royalty-free-vector/asian-palm-civet-head-face-vector-33880719).
