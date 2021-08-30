@@ -70,7 +70,7 @@ List.of("items?price=gte:10&price=lte:100").stream()
 ```
 
 #### Recursion
-Java makes it's impossible to use lambdas with references to itself. With a small helper¹ it is possible to go around this:
+Java makes it impossible to use lambdas with a reference to itself. With a small helper¹ it is possible to go around this though:
 ```java
 ƒ<Integer, Integer> fact = Recursable.recurse((i, f) -> 0 == i ? 1 : i * f.apply(i - 1, f));
 ```
