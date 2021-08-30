@@ -13,7 +13,7 @@ public interface Recursable<T, U> {
 	 * <p>Make a recursive lambda.</p>
 	 * <br>
 	 * <p>Factorial example:</p>
-	 * <pre>{@literal ƒ<Integer, Integer>} fact = recurse((i, f) -> 0 == i ? 1 : i * f.apply(i - 1, f));</pre>
+	 * <pre>{@literal ƒ<Integer, Integer> fact = recurse((i, f) -> 0 == i ? 1 : i * f.apply(i - 1, f));}</pre>
 	 *
 	 * @param <T> the type of the input of the function
 	 * @param <U> the type of the result of the function
@@ -30,11 +30,11 @@ public interface Recursable<T, U> {
 	 * <p>Make a tail recursive lambda.</p>
 	 * <br>
 	 * <p>Factorial example:</p>
-	 * <pre>{@literal ƒ<Integer, Integer>} fact = tailRecurse((input, accumulator) ->
+	 * <pre>{@literal ƒ<Integer, Integer> fact = tailRecurse((input, accumulator) ->
 	 *     0 == accumulator ? ret(1) :
 	 *     1 == accumulator ? ret(input) :
 	 *     next(() -> input * (accumulator - 1), () -> accumulator - 1));
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param <T> the type of the function
 	 * @param function a BiFunction to create the tail recursive lambda
@@ -50,10 +50,10 @@ public interface Recursable<T, U> {
 	 * <p>Make a tail recursive lambda with a provided input.</p>
 	 * <br>
 	 * <p>Factorial example:</p>
-	 * <pre>{@literal ƒ<Double, Double>} f = tailRecurse(0.0, (input, accumulator) ->
+	 * <pre>{@literal ƒ<Double, Double> f = tailRecurse(0.0, (input, accumulator) ->
 	 *     accumulator > 20.0 ? ret(input + 1.0) :
 	 *     next(() -> 0.25 + input, () -> accumulator + 1.0));
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param <T> the type of the function
 	 * @param identity the input starting value
@@ -71,10 +71,10 @@ public interface Recursable<T, U> {
 	 * <p>Make a tail recursive lambda with a provided input.</p>
 	 * <br>
 	 * <p>Example:</p>
-	 * <pre>{@literal ƒ<Integer, Double>} f = tailRecurse(0.0, (input, accumulator) ->
+	 * <pre>{@literal ƒ<Integer, Double> f = tailRecurse(0.0, (input, accumulator) ->
 	 *     accumulator > 20.0 ? ret(input + 1.0) :
 	 *     next(() -> 0.25 + input, () -> accumulator + 1.0), Double::valueOf);
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param <T> the type of the input of the function
 	 * @param <U> the type of the result of the function
@@ -95,10 +95,10 @@ public interface Recursable<T, U> {
 	 * <p>Make a tail recursive lambda with a provided accumulator.</p>
 	 * <br>
 	 * <p>Example:</p>
-	 * <pre>{@literal ƒ<Integer, Double>} f = tailRecurse((input, accumulator) ->
+	 * <pre>{@literal ƒ<Integer, Double> f = tailRecurse((input, accumulator) ->
 	 *     accumulator > 20.0 ? ret(input + 1.0) :
 	 *     next(() -> 0.25 + input, () -> accumulator + 1.0), 0.0);
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param <T> the type of the function
 	 * @param function a BiFunction to create the tail recursive lambda
@@ -116,10 +116,10 @@ public interface Recursable<T, U> {
 	 * <p>Make a tail recursive lambda with a provided accumulator.</p>
 	 * <br>
 	 * <p>Example:</p>
-	 * <pre>{@literal ƒ<Integer, Double>} f = tailRecurse((input, accumulator) ->
+	 * <pre>{@literal ƒ<Integer, Double> f = tailRecurse((input, accumulator) ->
 	 *     accumulator > 20.0 ? ret(input + 1.0) :
 	 *     next(() -> 0.25 + input, () -> accumulator + 1.0), 0.0, Double::valueOf);
-	 * </pre>
+	 * }</pre>
 	 *
 	 * @param <T> the type of the input of the function
 	 * @param <U> the type of the result of the function
