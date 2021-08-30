@@ -56,14 +56,31 @@ Optional<String> old = Optional.of("x");
 ```
 _:warning: The `Ø` is implemented as wrapper class of Optional due the Optional class being defined as final. This makes the use of this alias rather clumsy, thus this alias is defined as experimental._
 
-### Checked functions
-The Java compiler does not let you write lambda's with checked exceptions. Therefore the library provides checked functions to bypass this problem. All above functional interfaces do have a checked variant; to keep it short and consise, the same symbols are used with a `_` prefix. With other words, the CheckedFunction does look like `_ƒ`. All the default functional interfaces do have a `__` function to wrap a checked variant.
+### lambdas
+When you write lambdas, you have to take some quirks into account. Luwak provide some options to workaround some problems.
+
+#### Checked functions
+The Java compiler does not let you write lambdas with checked exceptions. Therefore the library provides checked functions to bypass this problem. All above functional interfaces do have a checked variant; to keep it short and consise, the same symbols are used with a `_` prefix. With other words, the CheckedFunction does look like `_ƒ`. All the default functional interfaces do have a `__` function to wrap a checked variant.
 
 Example:
 ```java
 List.of("items?price=gte:10&price=lte:100").stream()
     .map(ƒ.__(s -> URLEncoder.encode(s, "UTF-8"))) // or `__(...)` with a static import
     .collect(toList());
+```
+
+#### Recursion
+Java makes it's impossible to use lambdas with references to itself. With a small helper¹ it is possible to go around this:
+```java
+ƒ<Integer, Integer> fact = Recursable.recurse((i, f) -> 0 == i ? 1 : i * f.apply(i - 1, f));
+```
+
+Recursion can lead to a StackOverflowException when the input is big. With build in tail-call optimization² it is safe to do big computations:
+```java
+ƒ<BigDecimal, BigDecimal> fact = Recursable.tailRecurse((i, acc) ->
+    0 == acc.intValue() ? ret(ONE) :
+    1 == acc.intValue() ? ret(i) :
+    next(() -> i.multiply(acc.subtract(ONE)), () -> acc.subtract(ONE)));
 ```
 
 ### Extension
@@ -81,7 +98,8 @@ HttpClient client = HttpClient.newHttpClient();
 ### Utility
 Some actions like mapping, filtering and finding an element in a List are so common, it is a pity you need a lot of streaming code to write it down. Luwak provides a `Do` class to shorten these actions:
 ```java
-List<String> lowerCaseString = List.of("Example 1", "Example 2").stream().map(String::toLowerCase).collect(Collectors.toList());
+List<String> lo
+rCaseString = List.of("Example 1", "Example 2").stream().map(String::toLowerCase).collect(Collectors.toList());
 List<String> lowerCaseString = Do.map(List.of("Example 1", "Example 2"), String::toLowerCase);
 
 List<String> onlyFirstExample = List.of("Example 1", "Example 2").stream().filter(s -> s.equals("Example 1")).collect(Collectors.toList());
@@ -119,3 +137,6 @@ As the Java programming language is called after the Java coffee, everything com
 
 ### Credits
 The used favicon is a free vector image by VectorStock. You can find it [here](https://www.vectorstock.com/royalty-free-vector/asian-palm-civet-head-face-vector-33880719).
+
+¹ The [helper](https://stackoverflow.com/a/35997193/2049986) is posted by [Ian Robertson](https://stackoverflow.com/users/333675/ian-robertson) at Stack Overflow. Stack Overflow uses the Creative Commons Attribution-ShareAlike licence, click [here](https://stackoverflow.com/help/licensing) if you want to know more.  
+² Examples of runtime tail-call optimization for Java can be found in [Functional Programming in Java](http://www.r-5.org/files/books/computers/languages/java/style/Venkat_Subramaniam-Functional_Programming_in_Java-EN.pdf) by Venkat Subramaniam and [Functional Programming in Java](https://www.manning.com/books/functional-programming-in-java) by Pierre-Yves Saumont.
