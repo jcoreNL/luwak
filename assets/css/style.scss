@@ -40,6 +40,10 @@ h3 {
     background-color: inherit;
 }
 
+h3#credits + p + p {
+  font-size: .9em;
+}
+
 .site-footer {
   display: none;
 }
